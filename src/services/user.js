@@ -1,7 +1,6 @@
 import axios from "../config/axiosConfig";
 
-const getUserList = async (id) => {
-    console.log(id, "lk");
+const getUserList = async (id) => { 
     
     const query = id ? `user/list?merchant_id=${id}` : `user/list`
     const res = await axios.get(query);

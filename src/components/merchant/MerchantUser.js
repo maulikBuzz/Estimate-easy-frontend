@@ -15,10 +15,7 @@ import {
 
 function MerchantUser() {
     const { id } = useParams()
-
-    useEffect(() => {
-        console.log(id, "km no aavi ");
-    }, [id])
+ 
     
     const [merchantUsersList, setMerchantUsersList] = useState([]);
     const [editingItem, setEditingItem] = useState(null);
@@ -65,8 +62,7 @@ function MerchantUser() {
         }
     };
 
-    async function fetchData() {
-        console.log(id, "hello");
+    async function fetchData() { 
         
         const res = await merchantUsers.getUserList(id);
         const { data } = res;

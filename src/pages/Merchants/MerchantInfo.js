@@ -39,13 +39,11 @@ function MerchantInfo() {
     if (activeTab !== tab) setActiveTab(tab);
   };
 
-  async function fetchData() {
-    console.log(id, "id");
+  async function fetchData() { 
     
     const res = await merchants.getMerchantById(id);
     const { data } = res;
-    data && setMerchant(data.data);
-    console.log(data?.data);
+    data && setMerchant(data.data); 
   }
 
   useEffect(() => {
@@ -60,8 +58,7 @@ function MerchantInfo() {
 
   const getProductId = (id) => {
     setActiveId(id);
-  };
-console.log(merchant.id, "a");
+  }; 
 
   const handleSaveEdit = async (id, updatedData) => {
     const editMerchantData = await merchants.editMerchant(id, updatedData);

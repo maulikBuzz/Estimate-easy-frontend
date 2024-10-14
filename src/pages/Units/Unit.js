@@ -20,8 +20,7 @@ function Unit() {
         name: "", 
         code: ""
     });
-
-    console.log(addItem);
+ 
 
     const [modal_standard, setModal_standard] = useState(false);
     const [editModel, setEditModel] = useState(false);
@@ -33,16 +32,14 @@ function Unit() {
     const handleEdit = (id) => {
         const itemToEdit = unitList.find((item) => item.id === id);
         setEditingItem(itemToEdit);
-    };
-    console.log(editingItem, "editingItem");
+    }; 
     
     const handleDelete = async (id) => {
         const itemToEdit = unitList.find((item) => item.id === id);
         setDeleteItem(itemToEdit);
     };
 
-    const handleSaveEdit = async (id, updatedData) => {
-        console.log(updatedData, );
+    const handleSaveEdit = async (id, updatedData) => { 
         
         const editUnitData = await unit.editUnit(id, updatedData);
 
@@ -57,8 +54,7 @@ function Unit() {
     };
 
     const handleSubmit = async (event) => {
-        event.preventDefault();
-        console.log(addItem);
+        event.preventDefault(); 
 
         const addUnit = await unit.addUnit(addItem);
 

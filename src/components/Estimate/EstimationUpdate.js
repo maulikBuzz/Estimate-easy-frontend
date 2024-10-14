@@ -366,8 +366,7 @@ function EstimationUpdate() {
             };
           })
         };
-      });
-console.log(tables, "kem party ");
+      }); 
 
       const finalData = {
         name: customer.name,
@@ -468,8 +467,7 @@ console.log(tables, "kem party ");
     }
   };
 
-  const handelUnitsChange = (selectedOption, index, i) => {
-    console.log(index, i);
+  const handelUnitsChange = (selectedOption, index, i) => { 
 
     const data = {
       units: {
@@ -482,8 +480,7 @@ console.log(tables, "kem party ");
     updatedTables[i].subProduct[index].SubProductUnits.push(data);
     
     
-    setTables(updatedTables);
-    console.log(tables[i].subProduct[index].SubProductUnits, "hdhdhdhdhdh");
+    setTables(updatedTables); 
   };
  
   const [selectedImages] = useState(tables.map(() => []));
@@ -524,9 +521,6 @@ console.log(tables, "kem party ");
     setTables(updatedItems)
     e.target.value = null;
   };
-
-  console.log(tables, "a");
-
 
   return (
     <React.Fragment>

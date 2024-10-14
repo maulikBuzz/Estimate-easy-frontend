@@ -43,8 +43,7 @@ function EstimateCustomerList() {
       async function fetchData() {
         try {
           const res = await Estimate.getEstimateCustomers(merchant_id);
-          const { data } = res;
-          console.log(data?.data, "km party moj ma?");
+          const { data } = res; 
           setEstimateCustomersList(data?.data);
         } catch (error) {
           console.error("Error fetching estimate customers:", error);
@@ -53,18 +52,15 @@ function EstimateCustomerList() {
 
       fetchData();
     }
-  }, [merchant_id, isSubmitted]);
-  console.log(estimateCustomersList, "hahahahah");
+  }, [merchant_id, isSubmitted]); 
 
-  const handleDelete = async (id) => {
-    console.log(id, "----------------------");
+  const handleDelete = async (id) => { 
 
     const itemToEdit = estimateCustomersList.find((item) => item.id === id);
     setDeleteItem(itemToEdit);
   };
 
-  const handleSaveDelete = async (id) => {
-    console.log(id, "========================");
+  const handleSaveDelete = async (id) => { 
 
     const deleteProductData = await Estimate.deleteEstimate(id);
 
@@ -104,10 +100,8 @@ function EstimateCustomerList() {
       console.error('No PDF data received.');
     }
 
-  };
-  console.log(estimateCustomersList, "hello");
-
-
+  }; 
+ 
   const data = {
     columns: [
       { label: "Quotation Number", field: "quote_no", sort: "asc" },

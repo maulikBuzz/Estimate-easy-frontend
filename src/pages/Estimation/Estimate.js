@@ -59,8 +59,7 @@ function Estimate() {
         const unit_ids = selectedGroups.map(group => group.value);
         setAddItem({ ...addItem, unit_id: unit_ids });
     }
-    const handelUnitsChange = (selectedOption, index, i) => {
-        console.log( index, i);
+    const handelUnitsChange = (selectedOption, index, i) => { 
         
         const data = {
             units: {
@@ -297,8 +296,7 @@ function Estimate() {
  
 
     async function createEstimate(e) {
-        e.preventDefault();
-        console.log(e.target.name.value, "kaik");
+        e.preventDefault(); 
         
         try {
             const isPdf = (e.nativeEvent.submitter.id === "save_pdf");
@@ -389,8 +387,7 @@ function Estimate() {
                     setErrorMessage(data?.data?.errors[0].msg);
                     setShowAlert(true);
                 } else {
-                    setErrorMessage('');
-                    console.log(2);
+                    setErrorMessage(''); 
                     setTables([]);
 
                     setCustomer({
@@ -470,15 +467,8 @@ function Estimate() {
     };
  
 
-    const handleDeleteImage = async (tableIndex, imageIndex) => {
-        console.log(tableIndex, imageIndex, "tableIndex, imageIndex");
-        tables.map((item)=>[
-            item.images.map((image)=>{
-              console.log(image);
-              
-            })
-          ])
-        
+    const handleDeleteImage = async (tableIndex, imageIndex) => { 
+         
         setTables((prevTables) =>
           prevTables.map((table, i) =>
             i === tableIndex
@@ -491,15 +481,7 @@ function Estimate() {
         );
       };
    
-    tables.map((item) => {
-        console.log(item, "k");
-        item.images.map((items) => {
-            const imageUrl = URL.createObjectURL(items);
-            console.log(imageUrl, "em na thsy");
-
-        })
-    })
- console.log(tables);
+     
  
     return (
         <React.Fragment>

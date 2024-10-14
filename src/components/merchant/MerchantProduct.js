@@ -178,8 +178,7 @@ function MerchantProduct({  business_category_id, sendId }) {
     };
 
     useEffect(() => {
-        async function fetchData() {
-            console.log(id, "hshshsh");
+        async function fetchData() { 
             
             const res = await merchantProducts.getMerchantProductList(id);
             const { data } = res;
@@ -201,8 +200,7 @@ function MerchantProduct({  business_category_id, sendId }) {
     function getId(id) {
         sendId(id);
     }
-
-    console.log();
+ 
     const data = {
         columns: [
             { label: "ID", field: "id", sort: "asc" },

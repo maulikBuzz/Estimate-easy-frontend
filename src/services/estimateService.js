@@ -2,11 +2,7 @@ import axios from "../config/userAxiosConfig";
 
 
 const createEstimate = async (data) => { 
-    const formData = new FormData();
-
-    console.log(data.quotationItems);
-    
-    console.log(data.quotationItems[0].images, "gagag");
+    const formData = new FormData();  
 
     formData.append('name', data.name);
     formData.append('isPdf', data.isPdf);
@@ -22,8 +18,7 @@ const createEstimate = async (data) => {
     
     for (let i = 0; i < data.quotationItems.length; i++) {
         const element = data.quotationItems[i];
-        const imageInput = element.images
-        // console.log(element, "a");
+        const imageInput = element.images 
         if (imageInput && imageInput.length > 0) {
             for (let index = 0; index < imageInput.length; index++) {
               
@@ -54,8 +49,7 @@ const deleteEstimate = async (id) => {
     return res;
 };
 
-const updateEstimate = async ({finalData, customer_id}) => {
-    console.log(finalData, "hehe");
+const updateEstimate = async ({finalData, customer_id}) => { 
     
     const formData = new FormData();
     
@@ -73,17 +67,11 @@ const updateEstimate = async ({finalData, customer_id}) => {
 
     
     for (let i = 0; i < finalData.quotationItems.length; i++) {
-        const element = finalData.quotationItems[i];
-        console.log(element, "erterererer");
-        
-        const imageInput = element.images 
-        console.log(imageInput);
+        const element = finalData.quotationItems[i]; 
+        const imageInput = element.images  
         
         if (imageInput && imageInput.length > 0) {
-            for (let index = 0; index < imageInput.length; index++) {
-                console.log(`${element.name}-${i}`, imageInput[index], "kaik to che ");
-                
-              
+            for (let index = 0; index < imageInput.length; index++) {  
                 formData.append(`${element.name}-${i}`, imageInput[index]);
             }
         }
@@ -95,8 +83,7 @@ const updateEstimate = async ({finalData, customer_id}) => {
     });
     return res;
 };
-const getEstimateCustomers = async (merchant_id) => { 
-    console.log(merchant_id);
+const getEstimateCustomers = async (merchant_id) => {  
     
     const query = `estimate/customer/list?merchant_id=${merchant_id}`
     const res = await axios.get(query);
@@ -104,12 +91,8 @@ const getEstimateCustomers = async (merchant_id) => {
     return res;
 };
 const getEstimate = async ({customer_id, id}) => { 
-    let query = '' 
-    
-    console.log(id, "ahahahah");
-    if(id){
-        console.log("ahahahah");
-
+    let query = ''  
+    if(id){ 
         query = `estimate/get?user_customer_id=${customer_id}&merchant_product_id=${id}`
     }
     else{
@@ -117,8 +100,7 @@ const getEstimate = async ({customer_id, id}) => {
         query = `estimate/get?user_customer_id=${customer_id}`
     }
        
-    const res = await axios.get(query);
-    console.log(res, "user_customer_id");
+    const res = await axios.get(query); 
     return res;
 };
 const generatePdf = async (user_customer_id) => {  

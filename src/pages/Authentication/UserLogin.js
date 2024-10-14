@@ -41,12 +41,10 @@ function Login() {
     }
     if (data?.error != null) {
       setErrorMessage(data?.error)
-    }
-console.log(data?.data?.token);
+    } 
 
     localStorage.setItem("token", data?.data?.token);
-    if (data?.data?.token != null) {
-      console.log(data?.data?.token);
+    if (data?.data?.token != null) { 
       
       navigate("/user/estimate");
     }
