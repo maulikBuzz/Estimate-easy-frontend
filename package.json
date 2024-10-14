@@ -1,0 +1,65 @@
+{
+  "name": "lexareact",
+  "version": "2.0.0",
+  "private": true,
+  "proxy": "http://localhost:5000",
+  "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/icons-material": "^6.1.2",
+    "@testing-library/react": "^14.1.2",
+    "axios": "^1.6.2",
+    "bootstrap": "5.3.2",
+    "classnames": "^2.3.2",
+    "i18next": "^23.7.6",
+    "i18next-browser-languagedetector": "^7.2.0",
+    "lodash": "^4.17.21",
+    "mdbreact": "^4.26.0",
+    "metismenujs": "^1.4.0",
+    "node-sass": "^9.0.0",
+    "prop-types": "^15.8.1",
+    "react": "^18.2.0",
+    "react-apexcharts": "^1.4.1",
+    "react-i18next": "^13.5.0",
+    "react-redux": "^8.1.3",
+    "react-router-dom": "^6.20.0",
+    "react-scripts": "^5.0.1",
+    "react-select": "^5.8.0",
+    "react-sparklines": "^1.7.0",
+    "reactstrap": "^9.2.1",
+    "reselect": "4.1.8",
+    "simplebar-react": "^3.2.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "resolutions": {
+    "moment": "2.29.1"
+  },
+  "devDependencies": {
+    "eslint-config-standard-react": "^13.0.0",
+    "eslint-plugin-react": "^7.33.2",
+    "prettier": "^3.1.0"
+  }
+}
