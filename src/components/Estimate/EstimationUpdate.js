@@ -781,7 +781,7 @@ function EstimationUpdate() {
                               <div className='mt-5'>
                                 <div className="image-container">
                                   {item.images.map((image, io) => {
-                                    const imageUrl = image.image_url ?? URL.createObjectURL(image);
+                                    const imageUrl = ("https://estimate-ease-backend.onrender.com" + image.image_url) ?? URL.createObjectURL(image);
                                     return (
                                       <div   className="image-wrapper" style={{ position: 'relative', display: 'inline-block', margin: '10px' }}>
                                         <img
