@@ -76,6 +76,9 @@ function EstimateCustomerList() {
   const savePdf = async (id) => {
     const response = await Estimate.generatePdf(id);
 
+    console.log(response);
+    
+
     if (response.data) {
       const file = new Blob([response.data], { type: 'application/pdf' });
       const fileURL = URL.createObjectURL(file);

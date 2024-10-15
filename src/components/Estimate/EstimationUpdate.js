@@ -16,6 +16,8 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import { APP_URL } from "../../config/constants";
+
 
 import { useParams, useNavigate } from 'react-router-dom'
 
@@ -781,7 +783,8 @@ function EstimationUpdate() {
                               <div className='mt-5'>
                                 <div className="image-container">
                                   {item.images.map((image, io) => {
-                                    const imageUrl = ("https://estimate-ease-backend.onrender.com" + image.image_url) ?? URL.createObjectURL(image);
+                                    
+                                    const imageUrl = (APP_URL + image.image_url) ?? URL.createObjectURL(image);
                                     return (
                                       <div   className="image-wrapper" style={{ position: 'relative', display: 'inline-block', margin: '10px' }}>
                                         <img
