@@ -81,7 +81,7 @@ function EstimationUpdate() {
 
     const updatedTables = [
       ...tables.slice(0, i + 1),
-      { ...duplicatedItem, subProduct: updatedSubProduct ,  images : []},
+      { ...duplicatedItem, subProduct: updatedSubProduct, images: [] },
       ...tables.slice(i + 1),
     ];
 
@@ -204,12 +204,18 @@ function EstimationUpdate() {
 
     const subProduct = subProduct1.map(product => {
       const { id, ...rest } = product;
-      const updatedProduct = { material_id: id, ...rest };
+
+      // const unit_of_measure = product.SubProductUnits.length > 0 ? product.SubProductUnits.map((item) => item.units.name)[0] : '';
+      const unit_of_measure = product.unit_of_measure == null ? product.SubProductUnits.map((item) => item.units.name)[0] : '';
+
+      const updatedProduct = { material_id: id, ...rest, unit_of_measure };
 
       return updatedProduct;
     });
 
     const updatedGroup = { ...selectedGroup, subProduct };
+    console.log(updatedGroup);
+
     setTables([...tables, updatedGroup]);
 
     setAddModel(!addModel);
@@ -350,7 +356,7 @@ function EstimationUpdate() {
     }
     const isPdf = (e.nativeEvent.submitter.id === "save_pdf") ? true : false
     if (tables.length !== 0) {
-      const mappedData = tables.map(item => { 
+      const mappedData = tables.map(item => {
         return {
           item_name: item.item_name,
           total: item.total,
@@ -359,16 +365,20 @@ function EstimationUpdate() {
           id: item.id,
           images: item.images,
           material: item.subProduct.map(sub => {
+            console.log(sub.SubProductUnits, "hema");
+
             return {
               material_id: sub.material_id,
               id: sub.id ? sub.id : '',
               qty: sub.qty ? sub.qty : "0",
               price: sub.price,
-              unit_of_measure: sub.SubProductUnits.map(unit => unit.units.name).join(', ')
+              unit_of_measure: sub.unit_of_measure
             };
           })
         };
-      }); 
+      });
+
+
 
       const finalData = {
         name: customer.name,
@@ -444,32 +454,32 @@ function EstimationUpdate() {
     setImageInFullScreen(imageInFullScreen === imageIndex ? null : imageIndex); // Toggle full-screen
   };
 
-  const handleDeleteImage = async (tableIndex, imageIndex, id) => { 
+  const handleDeleteImage = async (tableIndex, imageIndex, id) => {
 
-    if (id != null) {  
+    if (id != null) {
       await Estimation.deleteQuotationImage(id);
-      
+
       setTables((prevTables) =>
         prevTables.map((table) => ({
           ...table,
           images: table.images.filter(image => image.id !== id)
         }))
       );
-    } else { 
+    } else {
       setTables((prevTables) =>
         prevTables.map((table, i) =>
           i === tableIndex
             ? {
-                ...table,
-                images: table.images.filter((_, idx) => idx !== imageIndex)
-              }
+              ...table,
+              images: table.images.filter((_, idx) => idx !== imageIndex)
+            }
             : table
         )
       );
     }
   };
 
-  const handelUnitsChange = (selectedOption, index, i) => { 
+  const handelUnitsChange = (selectedOption, index, i) => {
 
     const data = {
       units: {
@@ -480,11 +490,11 @@ function EstimationUpdate() {
     const updatedTables = [...tables];
 
     updatedTables[i].subProduct[index].SubProductUnits.push(data);
-    
-    
-    setTables(updatedTables); 
+
+    updatedTables[i].subProduct[index].unit_of_measure = selectedOption.label
+    setTables(updatedTables);
   };
- 
+
   const [selectedImages] = useState(tables.map(() => []));
 
   const handleFileChange = (index, e, i) => {
@@ -494,8 +504,11 @@ function EstimationUpdate() {
 
       if (io === i) {
         const files = e.target.files;
+
         const fileArray = Array.from(files);
-        const finalData = files.length + Products.images.length
+
+        const productFileCount = Products?.images != null ? Products?.images.length : 0
+        const finalData = files?.length + productFileCount
 
         if (finalData > maxFiles) {
           alert(`You can only upload up to ${maxFiles} images.`);
@@ -510,12 +523,17 @@ function EstimationUpdate() {
           e.target.value = "";
           return Products;
         }
-
-        return {
-          ...Products,
-          images: [...Products.images, ...fileArray]
-          // images: Products.images.concat(fileArray)  
-        };
+        if (Products?.images == null) {
+          return {
+            ...Products,
+            images: [...fileArray]
+          };
+        } else {
+          return {
+            ...Products,
+            images: [...Products.images, ...fileArray]
+          };
+        }
       }
       return Products
     })
@@ -723,7 +741,7 @@ function EstimationUpdate() {
                                       backgroundColor: 'rgba(0, 0, 255, 0.1)',
                                       '&:hover': { backgroundColor: 'rgba(0, 0, 255, 0.2)' }
                                     }}
-                                    
+
                                   >
                                     <AddIcon />
                                   </IconButton>
@@ -783,10 +801,10 @@ function EstimationUpdate() {
 
                               <div className='mt-5'>
                                 <div className="image-container">
-                                  {item.images && item.images.map((image, io) => { 
+                                  {item.images && item.images.map((image, io) => {
                                     const imageUrl = (APP_URL + image.image_url) ?? URL.createObjectURL(image);
                                     return (
-                                      <div   className="image-wrapper" style={{ position: 'relative', display: 'inline-block', margin: '10px' }}>
+                                      <div className="image-wrapper" style={{ position: 'relative', display: 'inline-block', margin: '10px' }}>
                                         <img
                                           src={imageUrl}
                                           alt={`image-${io}`}
@@ -856,7 +874,7 @@ function EstimationUpdate() {
                             />
                           </td>
                           <td>
-                            {subProduct.unit_of_measure == "" ? (
+                            {/* {subProduct.unit_of_measure == "" ? (
                               <Select
                                 name="unit_id"
                                 onChange={(selectedOption) => handelUnitsChange(selectedOption, index, i)}
@@ -867,7 +885,24 @@ function EstimationUpdate() {
                               
                                 <div key={subProduct.unit_of_measure}>{subProduct.unit_of_measure}</div>
                              
+                            )} */}
+                            {(subProduct.SubProductUnits && subProduct.SubProductUnits.length > 0) ? (
+                              subProduct.SubProductUnits.map((unit, i) => (
+                                <div key={unit.units.name}>{unit.units.name}</div>
+                              ))
+                            ) : (
+                              (subProduct.unit_of_measure === "" || subProduct.unit_of_measure == null) ? (
+                                <Select
+                                  name="unit_id"
+                                  onChange={(selectedOption) => handelUnitsChange(selectedOption, index, i)}
+                                  options={transformedUnitList}
+                                  classNamePrefix="select2-selection"
+                                />
+                              ) : (
+                                <div key={subProduct.unit_of_measure}>{subProduct.unit_of_measure}</div>
+                              )
                             )}
+
 
                           </td>
                           <td>
