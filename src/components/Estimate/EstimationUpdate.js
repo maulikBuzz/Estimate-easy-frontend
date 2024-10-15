@@ -783,8 +783,7 @@ function EstimationUpdate() {
 
                               <div className='mt-5'>
                                 <div className="image-container">
-                                  {item.images.map((image, io) => {
-                                    
+                                  {item.images && item.images.map((image, io) => { 
                                     const imageUrl = (APP_URL + image.image_url) ?? URL.createObjectURL(image);
                                     return (
                                       <div   className="image-wrapper" style={{ position: 'relative', display: 'inline-block', margin: '10px' }}>
