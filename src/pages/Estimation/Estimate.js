@@ -792,7 +792,8 @@ function Estimate() {
                                                         value={subProduct.name}
                                                         onChange={(e) => handleItemChange(index, e, i)}
                                                         className="form-control"
-                                                        placeholder="Material"
+                                                        placeholder="Material" 
+                                                        disabled
                                                     />
                                                 </td>
                                                 <td>

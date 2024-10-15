@@ -723,6 +723,7 @@ function EstimationUpdate() {
                                       backgroundColor: 'rgba(0, 0, 255, 0.1)',
                                       '&:hover': { backgroundColor: 'rgba(0, 0, 255, 0.2)' }
                                     }}
+                                    
                                   >
                                     <AddIcon />
                                   </IconButton>
@@ -851,6 +852,8 @@ function EstimationUpdate() {
                               onChange={(e) => handleItemChange(index, e, i)}
                               className="form-control"
                               placeholder="Material"
+
+                              disabled
                             />
                           </td>
                           <td>
