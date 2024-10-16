@@ -106,11 +106,10 @@ const getEstimate = async ({customer_id, id}) => {
 const generatePdf = async (user_customer_id) => {  
        
     const query = `generate/pdf?user_customer_id=${user_customer_id}`
-    const res = await axios.get(query,   {
-        responseType : 'blob',
-        headers : {
-          "Accept" : "application/pdf"
-        }
+    const res = await axios.get(query,   { 
+        headers: {
+          'Content-Type': 'application/json',
+        },
       }); 
   
     return res;

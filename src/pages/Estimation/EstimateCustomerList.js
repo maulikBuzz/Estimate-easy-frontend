@@ -75,16 +75,23 @@ function EstimateCustomerList() {
   };
   const savePdf = async (id) => {
     const response = await Estimate.generatePdf(id);
-
-    console.log(response);
-    
-
+ 
     if (response.data) {
-      const file = new Blob([response.data], { type: 'application/pdf' });
+      console.log(response.data, "hello");
+
+      const { data, name } = await response.data;
+      
+
+      const byteCharacters = atob(data); // Decode Base64 string
+      const byteNumbers = new Uint8Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const file = new Blob([byteNumbers], { type: 'application/pdf' });
       const fileURL = URL.createObjectURL(file);
 
       const contentDisposition = response.headers['content-disposition'];
-      let customFileName = 'default_filename.pdf';
+      let customFileName = `${name}.pdf`;
 
       if (contentDisposition) {
         const matches = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/.exec(contentDisposition);
