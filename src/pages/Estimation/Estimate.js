@@ -358,19 +358,18 @@ function Estimate() {
 
                 if (isPdf) {
                     const response = await Estimation.generatePdf(data?.data?.data.customer_id);
-                    if (response.data) {
-                        const file = new Blob([response.data], { type: 'application/pdf' });
-                        const fileURL = URL.createObjectURL(file);
-
-                        const contentDisposition = response.headers['content-disposition'];
-                        let customFileName = 'default_filename.pdf';
-
-                        if (contentDisposition) {
-                            const matches = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/.exec(contentDisposition);
-                            if (matches != null && matches[1]) {
-                                customFileName = matches[1].replace(/['"]/g, '');
-                            }
+                    if (response.data) {  
+                        const { data, name } = await response.data; 
+                  
+                        const byteCharacters = atob(data); 
+                        const byteNumbers = new Uint8Array(byteCharacters.length);
+                        for (let i = 0; i < byteCharacters.length; i++) {
+                          byteNumbers[i] = byteCharacters.charCodeAt(i);
                         }
+                        const file = new Blob([byteNumbers], { type: 'application/pdf' });
+                        const fileURL = URL.createObjectURL(file);
+                   
+                        let customFileName = `${name}.pdf`;
                         window.open(fileURL, '_blank');
                         const link = document.createElement('a');
                         link.href = fileURL;
@@ -378,9 +377,9 @@ function Estimate() {
                         document.body.appendChild(link);
                         link.click();
                         document.body.removeChild(link);
-                    } else {
+                      } else {
                         console.error('No PDF data received.');
-                    }
+                      }
                 }
 
                 if (data?.data?.errors) {

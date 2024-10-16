@@ -76,29 +76,18 @@ function EstimateCustomerList() {
   const savePdf = async (id) => {
     const response = await Estimate.generatePdf(id);
  
-    if (response.data) {
-      console.log(response.data, "hello");
+    if (response.data) {  
+      const { data, name } = await response.data; 
 
-      const { data, name } = await response.data;
-      
-
-      const byteCharacters = atob(data); // Decode Base64 string
+      const byteCharacters = atob(data); 
       const byteNumbers = new Uint8Array(byteCharacters.length);
       for (let i = 0; i < byteCharacters.length; i++) {
         byteNumbers[i] = byteCharacters.charCodeAt(i);
       }
       const file = new Blob([byteNumbers], { type: 'application/pdf' });
       const fileURL = URL.createObjectURL(file);
-
-      const contentDisposition = response.headers['content-disposition'];
+ 
       let customFileName = `${name}.pdf`;
-
-      if (contentDisposition) {
-        const matches = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/.exec(contentDisposition);
-        if (matches != null && matches[1]) {
-          customFileName = matches[1].replace(/['"]/g, '');
-        }
-      }
       window.open(fileURL, '_blank');
       const link = document.createElement('a');
       link.href = fileURL;
