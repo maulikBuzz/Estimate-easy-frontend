@@ -12,7 +12,8 @@ import Unit from 'pages/Units/Unit';
 import UserLogin from 'pages/Authentication/UserLogin';
 import Estimate from 'pages/Estimation/Estimate'; 
 import EstimateCustomerList from 'pages/Estimation/EstimateCustomerList';
-import EstimationList from 'components/Estimate/EstimationUpdate';
+import EstimationList from 'components/Estimate/EstimationUpdate'; 
+import Logout from 'pages/Authentication/Logout';
 
 
 const App = () => (
@@ -21,6 +22,7 @@ const App = () => (
     <Route path="/admin/login" element={<Login />} />
     <Route path="/" element={<Navigate to="/login" />} />
     <Route path="/login" element={<UserLogin />} />
+    <Route path="/logout" element={<Logout />} />
 
     <Route path="/admin" element={<VerticalLayout />} >
       <Route path="dashboard" element={<Dashboard />} />

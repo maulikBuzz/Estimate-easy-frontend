@@ -365,7 +365,6 @@ function EstimationUpdate() {
           id: item.id,
           images: item.images,
           material: item.subProduct.map(sub => {
-            console.log(sub.SubProductUnits, "hema");
 
             return {
               material_id: sub.material_id,
@@ -446,11 +445,19 @@ function EstimationUpdate() {
     }
   }, [errorMessage]);
 
-  const [isFullScreen, setIsFullScreen] = useState(false);
-  const [imageInFullScreen, setImageInFullScreen] = useState(null); // Track which image is in full screen
+  const [isFullScreen, setIsFullScreen] = useState(false); 
 
-  const handleImageClick = (imageIndex) => {
-    setImageInFullScreen(imageInFullScreen === imageIndex ? null : imageIndex); // Toggle full-screen
+  const [imageInFullScreen, setImageInFullScreen] = useState({ i: null, imageIndex: null });
+
+  const handleImageClick = (i, imageIndex) => {
+    console.log(i, imageIndex,"hello");
+    
+    // Toggle full-screen state for specific item and image
+    setImageInFullScreen(
+      imageInFullScreen.i === i && imageInFullScreen.imageIndex === imageIndex
+        ? { i: null, imageIndex: null }
+        : { i, imageIndex }
+    );
   };
 
   const handleDeleteImage = async (tableIndex, imageIndex, id) => {
@@ -800,28 +807,31 @@ function EstimationUpdate() {
 
                               <div className='mt-5'>
                                 <div className="image-container">
-                                  {item.images && item.images.map((image, io) => {
+                                  {/* {item.images && item.images.map((image, io) => {
                                     const imageUrl = (APP_URL + image.image_url) ?? URL.createObjectURL(image);
                                     return (
-                                      <div className="image-wrapper" style={{ position: 'relative', display: 'inline-block', margin: '10px' }}>
+                                      <div className="image-wrapper" style={{ position: 'relative', display: 'inline-block', margin: '5px', }}>
                                         <img
                                           src={imageUrl}
                                           alt={`image-${io}`}
                                           onClick={() => handleImageClick(io)}
                                           style={{
-                                            maxWidth: imageInFullScreen === io ? '100%' : '80px',
+                                            maxWidth: imageInFullScreen === io ? '100vw' : '80px',
+                                            maxHeight: imageInFullScreen === io ? '100vh' : 'auto',
+                                            width: imageInFullScreen === io ? '100%' : 'auto',
                                             height: imageInFullScreen === io ? '100vh' : 'auto',
-                                            margin: '5px',
                                             cursor: 'pointer',
                                             objectFit: imageInFullScreen === io ? 'contain' : 'cover',
                                             position: imageInFullScreen === io ? 'fixed' : 'static',
                                             top: imageInFullScreen === io ? '0' : 'auto',
                                             left: imageInFullScreen === io ? '0' : 'auto',
+                                            right: imageInFullScreen === io ? '0' : 'auto',
+                                            bottom: imageInFullScreen === io ? '0' : 'auto',
                                             zIndex: imageInFullScreen === io ? 1000 : 'auto',
                                             backgroundColor: imageInFullScreen === io ? 'rgba(0,0,0,0.9)' : 'transparent',
                                           }}
                                         />
-
+                                        {io}
                                         <Tooltip title="View Image" arrow>
                                           <IconButton
                                             onClick={() => handleImageClick(io)} // Handle fullscreen view
@@ -841,6 +851,69 @@ function EstimationUpdate() {
                                         <Tooltip title="Delete Image" arrow>
                                           <IconButton
                                             onClick={() => handleDeleteImage(i, io, image.id)} // Delete the image
+                                            color="secondary"
+                                            size="small"
+                                            style={{
+                                              position: 'absolute',
+                                              top: '5px',
+                                              right: '5px',
+                                              backgroundColor: 'rgba(255, 0, 0, 0.8)',
+                                            }}
+                                          >
+                                            <DeleteIcon />
+                                          </IconButton>
+                                        </Tooltip>
+                                      </div>
+
+                                    );
+                                  })} */}
+                                  {item.images && item.images.map((image, imageIndex) => {
+                                    const imageUrl = image?.image_url ? APP_URL + image.image_url : URL.createObjectURL(image);
+
+                                    return (
+                                      <div key={imageIndex} className="image-wrapper" style={{ position: 'relative', display: 'inline-block', margin: '5px' }}>
+                                        <img
+                                          src={imageUrl}
+                                          alt={`image-${imageIndex}`}
+                                          onClick={() => handleImageClick(i, imageIndex)} // Pass both item and image indices
+                                          style={{
+                                            maxWidth: imageInFullScreen.i === i && imageInFullScreen.imageIndex === imageIndex ? '100vw' : '80px',
+                                            maxHeight: imageInFullScreen.i === i && imageInFullScreen.imageIndex === imageIndex ? '100vh' : 'auto',
+                                            width: imageInFullScreen.i === i && imageInFullScreen.imageIndex === imageIndex ? '100%' : 'auto',
+                                            height: imageInFullScreen.i === i && imageInFullScreen.imageIndex === imageIndex ? '100vh' : 'auto',
+                                            cursor: 'pointer',
+                                            objectFit: imageInFullScreen.i === i && imageInFullScreen.imageIndex === imageIndex ? 'contain' : 'cover',
+                                            position: imageInFullScreen.i === i && imageInFullScreen.imageIndex === imageIndex ? 'fixed' : 'static',
+                                            top: imageInFullScreen.i === i && imageInFullScreen.imageIndex === imageIndex ? '0' : 'auto',
+                                            left: imageInFullScreen.i === i && imageInFullScreen.imageIndex === imageIndex ? '0' : 'auto',
+                                            right: imageInFullScreen.i === i && imageInFullScreen.imageIndex === imageIndex ? '0' : 'auto',
+                                            bottom: imageInFullScreen.i === i && imageInFullScreen.imageIndex === imageIndex ? '0' : 'auto',
+                                            zIndex: imageInFullScreen.i === i && imageInFullScreen.imageIndex === imageIndex ? 1000 : 'auto',
+                                            backgroundColor: imageInFullScreen.i === i && imageInFullScreen.imageIndex === imageIndex ? 'rgba(0,0,0,0.9)' : 'transparent',
+                                          }}
+                                        />
+
+                                        {/* Tooltip for View Image */}
+                                        <Tooltip title="View Image" arrow>
+                                          <IconButton
+                                            onClick={() => handleImageClick(i, imageIndex)} // Pass both item and image indices
+                                            color="primary"
+                                            size="small"
+                                            style={{
+                                              position: 'absolute',
+                                              top: '5px',
+                                              right: '45px',
+                                              backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                                            }}
+                                          >
+                                            <VisibilityIcon />
+                                          </IconButton>
+                                        </Tooltip>
+
+                                        {/* Tooltip for Delete Image */}
+                                        <Tooltip title="Delete Image" arrow>
+                                          <IconButton
+                                            onClick={() => handleDeleteImage(i, imageIndex, image.id)}
                                             color="secondary"
                                             size="small"
                                             style={{
